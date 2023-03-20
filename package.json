@@ -1,0 +1,26 @@
+{
+  "name": "the-quotes-room-pwa",
+  "version": "1.0.0",
+  "description": "Single Page Application of The Quotes Room",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RainbowJM/the-quotes-room-pwa.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RainbowJM/the-quotes-room-pwa/issues"
+  },
+  "homepage": "https://github.com/RainbowJM/the-quotes-room-pwa#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
