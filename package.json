@@ -8,12 +8,15 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm start"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RainbowJM/the-quotes-room-pwa.git"
   },
+  "keywords": [
+    "quotes"
+  ],
   "author": "Jevona Magdalena",
   "license": "MIT",
   "bugs": {
