@@ -3,13 +3,13 @@ const app = express();
 const port = 3000;
 
 // Setup the template engine ejs
-app.set('views', path.join(_dirname, 'views'));
+// app.set('views', path.join(_dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
     res.render('pages/index')
 })
-app.get('/', function(req, res){
+app.get('/about', function(req, res){
   res.render('pages/about')
 })
 
