@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); %>
+</head>
+
+<body>
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
+
+    <main id="router-view">
+        <% data.forEach( (quote)=> { %> 
+            <section>
+                <div class="title-box">
+                    <span><%-quote.authorId%></span>
+                    <h2><a href="/quotes/<%- quote.id%>"><%-quote.author%></a></h2>
+                    <hr />
+                    <p><%-quote.bio%></p>
+                </div>
+                <!-- <div class="loading"></div> -->
+                <!-- <div class="info">
+                    <q><%-quote.quote%></q>
+                </div> -->
+            </section>
+        <%}) %>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); %>
+</head>
+
+<body>
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
+
+    <main id="router-view">
+        <section>
+            <div class="title-box">
+                <span>
+                    <%-data.authorId%>
+                </span>
+                <h2>
+                    <%-data.author%>
+                </h2>
+                <hr />
+                <p>
+                    <%-data.bio%>
+                </p>
+            </div>
+            <!-- <div class="loading"></div> -->
+            <div class="info">
+                <q>
+                    <%-data.quote%>
+                </q>
+            </div>
+        </section>
+    </main>
+
+</body>
+
+</html>
