@@ -25,6 +25,9 @@ For the installation of this application you will need the following:
 - Express
 - EJS
 
+Extra:
+- Nodemon
+
 ### NPM and NodeJS
 To install NPM, use
 ```
@@ -83,6 +86,11 @@ To install it you can use npm
 ```
 npm install express
 ```
+### EJS
+
+### Nodemon
+This package is life saver it makes it more easier, so that you don't have to restart your server each time you add/edit something in your code. It will take care of this for you.
+
 
 ## Server
 To start the server use
@@ -96,6 +104,16 @@ const app = express();
 const port = 3000;
 ```
 To import 'Express' you have to use 'require()' method
+
+The localhost port in this case is `3000`, this is where the server will be running.
+For all of this you have to have your application knowing where it should be listening to.
+This part you can do by adding the following code in your `app.js`
+
+```javascript
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+```
 
 ## Template
 
@@ -111,6 +129,7 @@ var quotesRouter = require('./routes/quotes');
 app.use('/', quotesRouter);
 ```
 That calls the rest of the routing in the file `quotes.js`
+
 In the file `quotes.js` you will find the following variables:
 ``` javascript
 const express = require('express');
@@ -119,5 +138,26 @@ const axios = require('axios');
 const url = 'https://opensheet.elk.sh/1p7Wnace8KpaIFnATpBcil_KyJ4P8IC8vYIUO8NCfcKc/Quotes';
 const router = express.Router();
 ```
+`express.Router()` is the method that will take care of the routing of the application.
+
+
 ## Pages
+### Overview page
+For the overview page 
+```javascript 
+router.get('/', function(req, res) {
+	request(url, {json: true}, function (err, requestRes, body){
+		if (err) {
+			res.send(err);
+		} else {
+			res.render('quotes', {
+				title: 'Home', 
+				data: body
+			});
+		}
+	});
+});
+```
+The routing will render teh request made on `localhost`, and render the HTML that was made using EJS
+
 ## Source
