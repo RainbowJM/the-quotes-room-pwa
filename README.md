@@ -79,6 +79,9 @@ After doing this you will have to answer a few question so the set up, at the en
 }
 ```
 
+#### Build tools
+....
+
 ### Express
 For de server side of the application, we used the library Express.
 To install it you can use npm
@@ -184,3 +187,4 @@ router.get('/', function(req, res) {
 The routing will render teh request made on `localhost`, and render the HTML that was made using EJS
 
 ## Source
+- [Compressor](https://github.com/mishoo/UglifyJS)
