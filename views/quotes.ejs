@@ -10,7 +10,7 @@
         <%- include('./partials/header'); %>
     </header>
 
-    <main id="router-view">
+    <main id="quotes">
         <% data.forEach( (quote)=> { %> 
             <section>
                 <div class="title-box">
@@ -19,10 +19,6 @@
                     <hr />
                     <p><%-quote.bio%></p>
                 </div>
-                <!-- <div class="loading"></div> -->
-                <!-- <div class="info">
-                    <q><%-quote.quote%></q>
-                </div> -->
             </section>
         <%}) %>
     </main>
