@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const path = require('path');
 
 // Setup the template engine ejs
 app.set('view engine', 'ejs');
