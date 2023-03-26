@@ -6,7 +6,6 @@
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Server](#server)
-- [Template](#template)
 - [Routing](#routing)
 - [Pages](#pages)
 - [Source](#source)
@@ -86,12 +85,39 @@ To install it you can use npm
 ```
 npm install express
 ```
+
 ### EJS
+For this application the template engine that is used is EJS.
+It will take care of the rendering of the static pages
+
+To install the template you will have to do the following
+```
+npm install ejs
+```
+In the server you have to tell it where what template is used
+This you do by adding the following in the `app.js`, the method `app.set()`
+And for the static file like the stylesheet, img you have to use de static express middleware
+Als you have to indicate that this is in the public file
+
+```javascript
+app.set('view engine', 'ejs');
+app.set('views', 'views')
+
+app.use(express.static('public'));
+app.use(express.static('assets'));
+```
 
 ### Nodemon
 This package is life saver it makes it more easier, so that you don't have to restart your server each time you add/edit something in your code. It will take care of this for you.
 
+By using the script options in the `package.json` you can make different script that you can then run by using a shorter command in your terminal
 
+```javascript
+ "scripts": {
+    "start": "nodemon app.js",
+    "dev": "node app.js"
+  },
+  ```
 ## Server
 To start the server use
 ```
@@ -114,9 +140,6 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 ```
-
-## Template
-
 
 ## Routing
 For the routing part of the application, we use a general routing first in the `app.js`.
