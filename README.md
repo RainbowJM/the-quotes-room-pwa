@@ -80,7 +80,13 @@ After doing this you will have to answer a few question so the set up, at the en
 ```
 
 #### Build tools
-....
+##### Uglify.js
+One build tool that we use as compressor is Uglify.js
+
+To install this tool you have to do the following:
+```
+npm install uglify-js
+```
 
 ### Express
 For de server side of the application, we used the library Express.
