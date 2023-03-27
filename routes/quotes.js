@@ -36,4 +36,18 @@ router.get('/quotes/:id', function(req, res) {
     });
 });
 
+// Offline page
+router.get('/offline', function(req, res) {
+	request(url, {json: true}, function (err, requestRes, body){
+		if (err) {
+			res.send(err);
+		} else {
+			res.render('offline', {
+				title: 'Home offline', 
+				data: body
+			});
+		}
+	});
+});
+
 module.exports = router;

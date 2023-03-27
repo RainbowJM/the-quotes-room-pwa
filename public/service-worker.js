@@ -2,8 +2,7 @@ const cacheName = 'site-static';
 const assets = [
     '/',
     '/css/style.css',
-    // '/offline.ejs'
-
+    '/offline',
 ]
 
 self.addEventListener('install', event => {
