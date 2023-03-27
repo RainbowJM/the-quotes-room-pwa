@@ -28,7 +28,6 @@ router.get('/quotes/:id', function(req, res) {
         quotes = response.data;
         quote = quotes.find(quote => quote.id === id);
 
-        console.log(quote)
         if (quote !== null){
             res.render('quote', {
                 data: quote

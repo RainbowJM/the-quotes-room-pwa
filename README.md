@@ -88,6 +88,24 @@ To install this tool you have to do the following:
 npm install uglify-js
 ```
 
+##### Npm-run-all
+Sometimes you need to run a fake API with server, that means you will have to run multiple script at the same time.
+`npm-run-all` helps you, to make it easier to run everything
+
+To install it you have to do the following to add it to your `package.json` and in de `devDepencies`:
+```
+npm install npm-run-all --save-dev
+```
+
+When you have done this you then add the script in your `package.json`, that will take care of running it for you
+```javascript
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "node app.js",
+    "build": "npm-run-all build:*",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  ```
 ### Express
 For de server side of the application, we used the library Express.
 To install it you can use npm
