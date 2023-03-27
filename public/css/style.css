@@ -21,7 +21,6 @@ header section {
     height: 7em;
     display: flex;
     align-items: center;
-    /* background-color: aqua; */
 }
 
 img[target=logo] {
