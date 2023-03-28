@@ -7,6 +7,16 @@ const assets = [
     '/offline',
 ];
 
+const limitCacheSize = (name, size) => {
+    caches.open(name).then(cache => {
+        cache.keys().then(keys => {
+            if (keys.length > size){
+                cache.delete(keys[0].then(limitCacheSize(name,size)));
+            }
+        });
+    });
+};
+
 self.addEventListener('install', event => {
     console.log('Installed service worker');
 
@@ -68,6 +78,7 @@ function fetchAndCache(request, cacheName) {
             }
             const clone = response.clone();
             caches.open(cacheName).then((cache) => cache.put(request, clone));
+            limitCacheSize(cacheName,5);
             return response;
         })
 }
