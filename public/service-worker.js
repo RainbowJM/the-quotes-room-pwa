@@ -56,7 +56,8 @@ function isCoreGetRequest(request) {
 }
 
 function isHtmlGetRequest(request) {
-    return request.method === 'GET' && (request.headers.get('accept') !== null && request.headers.get('accept').indexOf('text/html') > -1);
+    return request.method === 'GET' && 
+    (request.headers.get('accept') !== null && request.headers.get('accept').indexOf('text/html') > -1);
 }
 
 function fetchAndCache(request, cacheName) {
