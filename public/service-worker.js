@@ -1,10 +1,11 @@
-const cacheName = 'cache';
+const cacheName = 'cache-v1';
 const runtimeCacheName = 'runtime-cache'
 const assets = [
     '/',
     '/css/style.css',
-    '/img/Quotes Room.png',
+    '/img/logo.ico',
     '/offline',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
 ];
 
 const limitCacheSize = (name, size) => {
