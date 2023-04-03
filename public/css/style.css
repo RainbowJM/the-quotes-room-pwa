@@ -148,6 +148,16 @@ p {
     line-height: 15px;
 }
 
+#offline{
+    width: 300px;
+    margin: 0 auto;
+    color: #fff;
+    font-family: 'Droid Serif', serif;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 15px;
+}
+
 q {
     width: 300px;
 }
