@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-let options = {maxAge: '2y'}
+let options = {maxAge: '2y',
+etag: false}
 
 // Setup the template engine ejs
 app.set('view engine', 'ejs');
