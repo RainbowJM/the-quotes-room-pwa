@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+let options = {maxAge: '1d'}
 
 // Setup the template engine ejs
 app.set('view engine', 'ejs');
 app.set('views', 'views')
 
-app.use(express.static('public'));
+app.use(express.static('public', options));
 app.use(express.static('assets'));
 
 var quotesRouter = require('./routes/quotes');
