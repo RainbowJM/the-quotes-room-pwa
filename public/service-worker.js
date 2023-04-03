@@ -1,11 +1,10 @@
-const cacheName = 'cache-v1';
+const cacheName = 'cache-v5';
 const runtimeCacheName = 'runtime-cache'
 const assets = [
     '/',
     '/css/style.css',
     '/img/logo.ico',
     '/offline',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
 ];
 
 const limitCacheSize = (name, size) => {
