@@ -42,8 +42,8 @@ npm init
 ```
 After doing this you will have to answer a few question so the set up, at the end you will get the following package.json file
 
-```
-{ 
+```json
+{
   "name": "the-quotes-room-pwa",
   "version": "1.0.0",
   "description": "Single Page Application of The Quotes Room",
@@ -221,3 +221,7 @@ The routing will render teh request made on `localhost`, and render the HTML tha
 
 ## Source
 - [Compressor](https://github.com/mishoo/UglifyJS)
+- [Uglify](https://www.npmjs.com/package/uglify-js)
+- [Ms](https://www.npmjs.com/package/ms)
+- [Express-minify-html](https://www.npmjs.com/package/express-minify-html)
+- [Express](https://expressjs.com/en/api.html#express)
