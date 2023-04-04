@@ -8,9 +8,8 @@
     "example": "examples"
   },
   "scripts": {
-    "start": "start app.js",
+    "start": "node app.js",
     "dev": "nodemon app.js",
-    "build": "npm-run-all build:*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
