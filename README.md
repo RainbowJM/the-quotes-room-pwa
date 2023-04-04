@@ -87,6 +87,15 @@ To install this tool you have to do the following:
 ```
 npm install uglify-js
 ```
+To save it in the devDependencies do as follow:
+```
+npm install uglify.js --save-dev
+```
+
+An now you can use it to compress the files that you want. As this application continues to develop this tool will be ready handy. 
+That is why we will set it up now so that in the future it can be used.
+
+The following scripts can be used to compress the file `.js` you want.
 
 ##### Npm-run-all
 Sometimes you need to run a fake API with server, that means you will have to run multiple script at the same time.
@@ -105,7 +114,7 @@ When you have done this you then add the script in your `package.json`, that wil
     "build": "npm-run-all build:*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  ```
+```
 ### Express
 For de server side of the application, we used the library Express.
 To install it you can use npm
