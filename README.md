@@ -109,9 +109,9 @@ npm install npm-run-all --save-dev
 When you have done this you then add the script in your `package.json`, that will take care of running it for you
 ```javascript
   "scripts": {
-    "start": "nodemon app.js",
-    "dev": "node app.js",
-    "build": "npm-run-all build:*",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "all": "npm-run-all --parallel serve api",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
 ```
