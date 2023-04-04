@@ -26,6 +26,11 @@ For the installation of this application you will need the following:
 
 Extra:
 - Nodemon
+- Axios
+- Request
+- Express-minify-html
+- Uglify-js
+- Npm-run-all
 
 ### NPM and NodeJS
 To install NPM, use
@@ -53,8 +58,10 @@ After doing this you will have to answer a few question so the set up, at the en
     "example": "examples"
   },
   "scripts": {
-    "start": "nodemon app.js",
-    "dev": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "all": "npm-run-all --parallel serve api",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -73,10 +80,17 @@ After doing this you will have to answer a few question so the set up, at the en
     "axios": "^1.3.4",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "nodemon": "^2.0.21",
+    "express-minify-html": "^0.12.0",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "gulp-rev": "^10.0.0",
+    "nodemon": "^2.0.21",
+    "npm-run-all": "^4.1.5",
+    "uglify-js": "^3.17.4",
   }
 }
+
 ```
 
 #### Build tools
@@ -91,11 +105,18 @@ To save it in the devDependencies do as follow:
 ```
 npm install uglify.js --save-dev
 ```
-
 An now you can use it to compress the files that you want. As this application continues to develop this tool will be ready handy. 
 That is why we will set it up now so that in the future it can be used.
 
+Uglify has its own command line options:
+- -h, --help - Print usage information
+- -c, --compress - Enable compressor/specify compressor options
+- -m, --mangle
+- -o, --output - Minimize the file
+
 The following scripts can be used to compress the file `.js` you want.
+In the future of the development of the application, that maybe will add a client-side to the application
+That contains `.js`, can use Uglify to minimize the file, and help with the performace of the application
 
 ##### Npm-run-all
 Sometimes you need to run a fake API with server, that means you will have to run multiple script at the same time.
