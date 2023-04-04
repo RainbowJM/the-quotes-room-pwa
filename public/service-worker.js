@@ -2,7 +2,7 @@ const cacheName = 'cache-v4';
 const runtimeCacheName = 'runtime-cache'
 const assets = [
     '/',
-    '/css/style.css',
+    '/css/style.min.css',
     '/img/logo.ico',
     '/offline',
 ];
