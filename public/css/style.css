@@ -6,6 +6,7 @@
 
 body {
     height: 100vh;
+    background-color: #e6e9ff;
 }
 
 header {
@@ -28,6 +29,21 @@ img[target=logo] {
     cursor: pointer;
     margin: 30px 0;
     border-radius: 50%;
+}
+
+main {
+    height: 100vh;
+    height: 100dvh;
+    scroll-snap-type: x mandatory;
+    place-self: center;
+    display: flex;
+    overflow-x: auto;
+    gap: 2em;
+    width: 95%;
+}
+
+a {
+    text-decoration: none;
 }
 
 h1 {
@@ -75,12 +91,33 @@ header section input {
     display: grid;
 }
 
-main {
+main section {
+    border-radius: 0.7em;
+    height: 30em;
+    background-size: 22em 30em;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+    background-color: #BBc2ff;
+    margin-top: 5em;
+}
+
+section {
+    display: grid;
+    place-content: center;
+    scroll-snap-align: center;
+    block-size: 90vmin;
+    aspect-ratio: 1;
+    background-color: var(--black);
+    border: solid var(--last-green) 2px;
+    position: relative;
+    box-shadow: 4px 4px 10px var(--last-green);
+}
+
+main#quote {
     display: grid;
     place-content: center;
 }
 
-main section {
+main#quote section{
     border-radius: 0.7em;
     position: relative;
     width: 22em;
@@ -92,7 +129,6 @@ main section {
     margin-top: 5em;
     margin-bottom: 20em;
 }
-
 section:hover .info {
     bottom: -3em;
     opacity: 1;
@@ -148,7 +184,7 @@ p {
     line-height: 15px;
 }
 
-#offline{
+#offline {
     width: 300px;
     margin: 0 auto;
     color: #fff;
@@ -169,8 +205,8 @@ main footer {
     width: 80%;
     display: inline-block;
     font-size: 1.2em;
-    padding: 0 2em;  
-    text-align: center;  
+    padding: 0 2em;
+    text-align: center;
 }
 
 button {
