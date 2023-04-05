@@ -8,6 +8,7 @@
 - [Server](#server)
 - [Routing](#routing)
 - [Pages](#pages)
+- [PWA](#progressive-web-app)
 - [Source](#source)
 
 ## Introduction
@@ -57,11 +58,12 @@ After doing this you will have to answer a few question so the set up, at the en
     "doc": "docs",
     "example": "examples"
   },
-  "scripts": {
+ "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
     "all": "npm-run-all --parallel serve api",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify:script": "uglifyjs app.js -c -m -o script.min.js"
   },
   "repository": {
     "type": "git",
@@ -128,20 +130,22 @@ npm install npm-run-all --save-dev
 ```
 
 When you have done this you then add the script in your `package.json`, that will take care of running it for you
-```javascript
-  "scripts": {
+```json
+ "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
     "all": "npm-run-all --parallel serve api",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify:script": "uglifyjs app.js -c -m -o script.min.js"
   },
 ```
 ### Express
-For de server side of the application, we used the library Express.
+For the server side of the application, we used the library Express.
 To install it you can use npm
 ```
 npm install express
 ```
+All the logic of the server you will find in the file `app.js`. 
 
 ### EJS
 For this application the template engine that is used is EJS.
@@ -173,8 +177,14 @@ By using the script options in the `package.json` you can make different script 
  "scripts": {
     "start": "nodemon app.js",
     "dev": "node app.js"
-  },
-  ```
+},
+```
+
+### Axios
+To install axios you can use the following:
+```
+npm install axios
+```
 ## Server
 To start the server use
 ```
@@ -211,7 +221,7 @@ app.use('/', quotesRouter);
 That calls the rest of the routing in the file `quotes.js`
 
 In the file `quotes.js` you will find the following variables:
-``` javascript
+```javascript
 const express = require('express');
 const request = require('request');
 const axios = require('axios');
@@ -220,10 +230,9 @@ const router = express.Router();
 ```
 `express.Router()` is the method that will take care of the routing of the application.
 
-
 ## Pages
 ### Overview page
-For the overview page 
+For the overview page, contains the general information. 
 ```javascript 
 router.get('/', function(req, res) {
 	request(url, {json: true}, function (err, requestRes, body){
@@ -239,6 +248,209 @@ router.get('/', function(req, res) {
 });
 ```
 The routing will render teh request made on `localhost`, and render the HTML that was made using EJS
+
+The HTML with the EJS template `quotes.ejs`
+As you can see the route for this one is `/quotes`
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); %>
+</head>
+
+<body>
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
+
+    <main id="quotes">
+        <% data.forEach( (quote)=> { %> 
+            <section>
+                <div class="title-box">
+                    <span><%-quote.authorId%></span>
+                    <h2><a href="/quotes/<%- quote.id%>"><%-quote.author%></a></h2>
+                    <hr />
+                    <p><%-quote.bio%></p>
+                </div>
+            </section>
+        <%}) %>
+    </main>
+
+    <footer>
+        <%- include('./partials/footer'); %>
+    </footer>
+</body>
+
+</html>
+```
+### Details page
+Here you will get the quote based on the actor, this is based on the route `quotes/:id`
+```javascript
+router.get('/quotes/:id', function(req, res) {
+    const id = req.params.id
+    let quotes;
+    let quote;
+    axios.get(url)
+    .then(function(response) {
+        quotes = response.data;
+        quote = quotes.find(quote => quote.id === id);
+
+        if (quote !== null){
+            res.render('quote', {
+                data: quote
+            });
+        }
+    });
+});
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); %>
+</head>
+
+<body>
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
+
+    <main id="quote">
+        <section>
+            <div class="title-box">
+                <span>
+                    <%- data.authorId%>
+                </span>
+                <h2>
+                    <%- data.author%>
+                </h2>
+                <hr />
+                <p>
+                    <%- data.bio%>
+                </p>
+            </div>
+            <div class="info">
+                <q>
+                    <%- data.quote%>
+                </q>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <%- include('./partials/footer'); %>
+    </footer>
+</body>
+
+</html>
+```
+For this one you can see `axios` was used for this part.
+With `axios.get()` data based on the URL.
+The data that is return, will be filtered based on the `id` and then it returns the data
+
+### Offline page
+This is the page the user will get when the network is offline.
+The route is `/offline`
+
+```javascript
+router.get('/offline', function(req, res) {
+	request(url, {json: true}, function (err, requestRes, body){
+		if (err) {
+			res.send(err);
+		} else {
+			res.render('offline', {
+				title: 'Home offline', 
+				data: body
+			});
+		}
+	});
+});
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); %>
+</head>
+
+<body>
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
+
+    <main>
+        <section>
+            <div class="title-box">
+                <h2>
+                    Check network!
+                </h2>
+                <hr />
+                <p id="offline">
+                    Going offline for some days is like a new world you're checking in..
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <%- include('./partials/footer'); %>
+    </footer>
+</body>
+
+</html>
+```
+
+### About page
+The route for this page is `/about`, this is more a short description of the application.
+```javascript
+router.get('/about', function(req, res) {
+	res.render('about', {
+		title: 'About',
+		data: 'The Quotes Room is a single page application, where you get all the quotes that you need'
+	})
+});
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head'); %>
+</head>
+<body>
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
+
+    <main>
+        <section id="about">
+            <div class="title-box">
+                <h3>About</h3>
+                <hr/>
+                <p>Jevona Magdalena</p>
+            </div>
+            <div id="quote-about">
+                <q>
+                    <%- data%>
+                </q>
+            </div>
+            <h4></h4>
+            <footer>
+                <span>© 2023 Creator of The Quotes Room</span>
+            </footer>
+        </section>
+    </main>
+</body>
+</html>
+```
+
+## Progressive Web App
+After having having the main logic of the applicatoion down, it's time to make it a progressive
 
 ## Source
 - [Compressor](https://github.com/mishoo/UglifyJS)
