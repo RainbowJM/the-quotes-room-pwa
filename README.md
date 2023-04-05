@@ -469,9 +469,219 @@ The requirements of a PWA application:
 #### Service Worker
 <img width="1512" alt="Screenshot 2023-04-05 at 11 10 59" src="https://user-images.githubusercontent.com/59873140/230036527-d8e19bc6-d4b1-4e39-b1f1-ad805809b8ce.png">
 
+In Dev tools you can see in the tab application the information of the service worker and manifest
+
+##### Job Story
+> When I am in the train and do not have a good internet connection, I still want to see the list of quotes so that I can still get inspiration for my school projects on the go.
+
+Service worker act as a proxy server between the Web application, the browser and the network with connection
+
+Task:
+- Creating a good offline experience.
+- Watch request and response between server and client.
+- Provide access to push notifications.
+
+In the root of the appliction, in this case in the `public` folder you will find the file `service-worker.js`
+
+To register the service worker, so that the browser knows about it. 
+For the registration part you can find it in `footer.ejs`
+
+```html
+<script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function(registration) {
+            console.log('service worker registered', registration)
+            return registration.update();
+          })
+          .catch(error => console.log('service worker not registered', error))
+      });
+    }
+</script>
+```
+A server is event-based. It consists of three events.
+- Install event
+- Activate event 
+- Fetch event 
+
+The install event, takes care of the installation part of the server worker. 
+This is also where the precaching takes place. 
+During this step, the application is preparing to make everything available for use offline.
+
+```javascript
+self.addEventListener('install', event => {
+    console.log('Installed service worker');
+
+    event.waitUntil(
+        caches.open(cacheName)
+            .then(cache => {
+                cache.addAll(assets)
+                    .then(() => self.skipWaiting());
+            })
+    );
+});
+```
+When the `install` handler completes, the service worker is considered installed.
+
+The activate event, is where the service worker is activated.
+The point where this event fires is generally a good time to clean up old caches and other things associated with the previous version of your service worker. 
+
+```javascript
+self.addEventListener('activate', event => {
+    console.log('Activating service worker')
+    event.waitUntil(
+        caches.keys()
+            .then(names => {
+                return Promise.all(names
+                    .filter(name => name !== cacheName && name !== runtimeCacheName)
+                    .map(key => caches.delete(key)))
+            })
+    )
+});
+```
+And finally you have the fetch event. In this event the stored data is fetched and rendered on the page or returned to the offline fallback page.
+
+```javascript
+self.addEventListener('fetch', event => {
+    console.log('Fetch event: ', event.request.url);
+    if (isCoreGetRequest(event.request)) {
+        event.respondWith(
+            caches.open(cacheName)
+                .then(cache => cache.match(event.request.url))
+        );
+    } else if (isHtmlGetRequest(event.request)) {
+        event.respondWith(
+            caches.open(runtimeCacheName)
+                .then(cache => cache.match(event.request.url))
+                .then(response => response ? response : fetchAndCache(event.request, runtimeCacheName))
+                .catch(e => {
+                    return caches.open(cacheName)
+                        .then(cache => cache.match('/offline'))
+                })
+        );
+    }
+});
+
+function isCoreGetRequest(request) {
+    return request.method === 'GET' && assets.includes(getPathName(request.url));
+}
+
+function isHtmlGetRequest(request) {
+    return request.method === 'GET' && 
+    (request.headers.get('accept') !== null && request.headers.get('accept').indexOf('text/html') > -1);
+}
+
+function fetchAndCache(request, cacheName) {
+    return fetch(request)
+        .then(response => {
+            if (!response.ok) {
+                throw new TypeError('Bad response status');
+            }
+            const clone = response.clone();
+            caches.open(cacheName).then((cache) => cache.put(request, clone));
+            limitCacheSize(cacheName,5);
+            return response;
+        })
+}
+
+function getPathName(requestUrl) {
+    const url = new URL(requestUrl);
+    return url.pathname;
+}
+```
+
+There is also a part where cleans the run time cache
+
+```javascript 
+const limitCacheSize = (name, size) => {
+    caches.open(name).then(cache => {
+        cache.keys().then(keys => {
+            if (keys.length > size){
+                cache.delete(keys[0].then(limitCacheSize(name,size)));
+            }
+        });
+    });
+};
+```
+
 #### Manifest
+The manifest is a `.json` file, it has information of your application that is needed for PWA
+
+In the root/public of the application is were the `manifest.json` will is.
+
+The manifest consist of the following:
+- `name`
+- `short_name`
+- `theme_color`
+- `background_color`
+- `display`
+- `scope`
+- `start_url`
+- `manifest_version`
+- `orientation`
+- `icons`
+
+```json
+{
+    "name": "The Quote Room",
+    "short_name": "The Quote Room",
+    "theme_color": "#BBC2FF",
+    "background_color": "#FFFFFF",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "manifest_version": 2,
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/img/Quotes room.png",
+            "type": "image/png",
+            "sizes": "500x500"
+        },  
+        {
+            "src": "/img/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },  
+        {
+            "src": "/img/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
+```
+
+To make the connection of your manifest you have to loink it in your HTML page.
+
+```html
+<link rel="manifest" href="/manifest.json">
+```
 
 #### Testing
+##### Lighthouse
+The extension lighthouse you can test the asseccibility of your application and also your PWA of your application.
+
+#### Activity Flow
+--- missing ---
+
+## Critical Rendering Path
+The critical rendering path refers to the process of rendering a Web page in the browser. 
+From the time the user enters a URL until the page is fully loaded. 
+Optimizing the critical rendering path is important because it affects the load time of a page, which in turn can affect user experience and search engine ranking.
+
+
 
 ## Source
 - [Compressor](https://github.com/mishoo/UglifyJS)
