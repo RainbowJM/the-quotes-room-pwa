@@ -1,6 +1,6 @@
 # Progressive Web Apps - The Quote Room
 
-<img width="1352" alt="Screenshot 2023-03-06 at 11 49 07" src="https://user-images.githubusercontent.com/59873140/226754427-3d3cda39-a5cf-4271-9845-4a7c570b2ddc.png">
+![Screenshot 2023-04-05 at 22 12 06](https://user-images.githubusercontent.com/59873140/230198964-d7a07dda-6ab2-4ba8-b6a3-bafd5c4388d9.png)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -9,6 +9,7 @@
 - [Routing](#routing)
 - [Pages](#pages)
 - [PWA](#progressive-web-app)
+- [Online](#online)
 - [Source](#source)
 
 ## Introduction
@@ -139,6 +140,23 @@ When you have done this you then add the script in your `package.json`, that wil
     "minify:script": "uglifyjs app.js -c -m -o script.min.js"
   },
 ```
+
+#### Express-minify-html
+``` javascript
+const minifyHTML = require('express-minify-html');
+ app.use(minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeEmptyAttributes: true,
+        minifyJS: true
+    }
+}));
+```
 ### Express
 For the server side of the application, we used the library Express.
 To install it you can use npm
@@ -232,6 +250,8 @@ const router = express.Router();
 
 ## Pages
 ### Overview page
+<img width="1510" alt="Screenshot 2023-04-05 at 22 18 07" src="https://user-images.githubusercontent.com/59873140/230200172-fceaf856-eb1a-457a-973d-5c68fbae25b3.png">
+
 For the overview page, contains the general information. 
 ```javascript 
 router.get('/', function(req, res) {
@@ -285,6 +305,8 @@ As you can see the route for this one is `/quotes`
 </html>
 ```
 ### Details page
+<img width="1512" alt="Screenshot 2023-04-05 at 22 18 31" src="https://user-images.githubusercontent.com/59873140/230200270-62d0a1d0-4e84-4a67-bc46-77ee860ce111.png">
+
 Here you will get the quote based on the actor, this is based on the route `quotes/:id`
 ```javascript
 router.get('/quotes/:id', function(req, res) {
@@ -352,6 +374,8 @@ With `axios.get()` data based on the URL.
 The data that is return, will be filtered based on the `id` and then it returns the data
 
 ### Offline page
+<img width="649" alt="Screenshot 2023-04-05 at 22 24 53" src="https://user-images.githubusercontent.com/59873140/230202348-13addf3f-d71e-4c13-971e-1f34762063b3.png">
+
 This is the page the user will get when the network is offline.
 The route is `/offline`
 
@@ -668,20 +692,109 @@ To make the connection of your manifest you have to loink it in your HTML page.
 ```html
 <link rel="manifest" href="/manifest.json">
 ```
-
-#### Testing
-##### Lighthouse
-The extension lighthouse you can test the asseccibility of your application and also your PWA of your application.
+<img width="1512" alt="Screenshot 2023-04-05 at 11 10 59" src="https://user-images.githubusercontent.com/59873140/230209165-ebdbaf6d-762c-41bc-872e-e6be1b752cd9.png">
 
 #### Activity Flow
---- missing ---
+
+![Screenshot 2023-04-05 at 21 54 04](https://user-images.githubusercontent.com/59873140/230202824-2a2fbc64-7199-4707-a402-7530e2be48ea.png)
+
+This is the activity diagram for the service worker. 
+The diagram consists of the flow of the application. 
+The url endpoints of the applications. 
+At the bottom you have the control flow so the main part of the activity diagram. 
 
 ## Critical Rendering Path
 The critical rendering path refers to the process of rendering a Web page in the browser. 
 From the time the user enters a URL until the page is fully loaded. 
 Optimizing the critical rendering path is important because it affects the load time of a page, which in turn can affect user experience and search engine ranking.
 
+To optimize the critical rendering path, there are several techniques and best practices that can be implemented. 
 
+Some examples include:
+- Code Minimization
+- Compress files
+- Cache control
+
+To test the performace of the applaction you can use lighthouse or check the timespan in the network tab
+<img width="218" alt="Screenshot 2023-04-03 at 12 11 09" src="https://user-images.githubusercontent.com/59873140/230210187-134652f6-85f2-461a-ba2f-758bc2a2a509.png">
+
+### Loading speed
+<img width="1352" alt="Screenshot 2023-04-03 at 13 51 35" src="https://user-images.githubusercontent.com/59873140/230208956-056341e3-bb2e-4c50-bc28-6d66328fb855.png">
+
+<img width="1352" alt="Screenshot 2023-04-03 at 13 53 22" src="https://user-images.githubusercontent.com/59873140/230209044-26f6f4a0-b462-470e-bbd6-c772cd946c09.png">
+
+### CSS minimization
+Minimize cssyou can do it by using a plugin from vscode. 
+But the plugin is the same as the build tool from uglifyjs. 
+What this does is it takes out all the whitespace and puts all the css properties on one line.
+See the before and after below
+<img width="737" alt="Screenshot 2023-04-03 at 15 01 24" src="https://user-images.githubusercontent.com/59873140/230209771-e20d3a4d-c385-40d3-ac22-5fd580bb2363.png">
+
+<img width="738" alt="Screenshot 2023-04-03 at 15 02 46" src="https://user-images.githubusercontent.com/59873140/230209794-052c00ec-549a-4abc-a07b-7f4df6b04660.png">
+
+### HTML minimization
+
+![Screenshot 2023-04-05 at 22 55 55](https://user-images.githubusercontent.com/59873140/230209553-b3c56826-12ef-413c-85f9-84cb2afd9abf.png)
+
+<img width="738" alt="Screenshot 2023-04-03 at 15 17 00" src="https://user-images.githubusercontent.com/59873140/230209374-97d6ffa6-4b2a-42f1-a0bc-86b43365375e.png">
+
+```javascript
+const minifyHTML = require('express-minify-html');
+
+app.use(minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeEmptyAttributes: true,
+        minifyJS: true
+    }
+}));
+```
+
+### Lighthouse
+The extension lighthouse you can test the accessibility of your application and also your PWA of your application.
+
+See the before and after below
+![Screenshot 2023-04-05 at 23 00 05](https://user-images.githubusercontent.com/59873140/230210371-e2db4f1e-398b-42e6-98b1-48c0b824c15e.png)
+
+![Screenshot 2023-04-05 at 22 50 48](https://user-images.githubusercontent.com/59873140/230208540-e04a5f4d-b242-421d-982d-83cf23ae91c1.png)
+
+### Cache control
+Caching control is a method used to manage the cache settings of a Web page or other file on a Web server.
+When a browser visits a Web page, a copy of the page is stored in the browser's cache to speed up the load time of future visits to that page
+
+It's not recommened to cache your html, because that is where all your call are.
+But caching your css is highly recommened
+
+By default a website doesn't cache, you have to set it up by doing the following:
+```javascript
+let options = {
+  maxAge: '2y',
+  etag: false
+}
+
+app.use(express.static('public', options));
+```
+
+## Online
+The last part for this assignment is putting the app online. 
+To host the application railway app was used.
+With railway you can link your github account and every time you commit it will also updated on railway.
+
+![Screenshot 2023-04-05 at 22 46 36](https://user-images.githubusercontent.com/59873140/230207661-a005a89c-25d7-4ca7-b81b-1ec2c753a099.png)
+
+Set up railway for hosting:
+- Npm Script in your `package.json` should be `" start": "node app.js"`
+- Create Railway account with your github account
+- Set up your setting
+- Choose repository
+- Create new project
+- Generate domain name 
+- At Variable add the PORT and PORT NUMBER
 
 ## Source
 - [Compressor](https://github.com/mishoo/UglifyJS)
