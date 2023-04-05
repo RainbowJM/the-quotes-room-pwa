@@ -467,6 +467,7 @@ The requirements of a PWA application:
 - Manifest
 
 #### Service Worker
+<img width="1512" alt="Screenshot 2023-04-05 at 11 10 59" src="https://user-images.githubusercontent.com/59873140/230036527-d8e19bc6-d4b1-4e39-b1f1-ad805809b8ce.png">
 
 #### Manifest
 
