@@ -112,12 +112,14 @@ section {
     box-shadow: 4px 4px 10px var(--last-green);
 }
 
-main#quote {
+main#quote, 
+main#offline-main{
     display: grid;
     place-content: center;
 }
 
-main#quote section{
+main#quote section,
+main#offline-main section{
     border-radius: 0.7em;
     position: relative;
     width: 22em;
