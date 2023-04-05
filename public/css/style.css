@@ -179,7 +179,7 @@ h3 {
 p {
     width: 300px;
     margin: 0 auto;
-    color: #fff;
+    color: darkslateblue;
     font-family: 'Droid Serif', serif;
     font-size: 13px;
     font-style: italic;
@@ -189,7 +189,7 @@ p {
 #offline {
     width: 300px;
     margin: 0 auto;
-    color: #fff;
+    color: purple;
     font-family: 'Droid Serif', serif;
     font-size: 13px;
     font-style: italic;
