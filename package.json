@@ -11,7 +11,8 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "all": "npm-run-all --parallel serve api",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify:script": "uglifyjs app.js -c -m -o app.min.js"
   },
   "repository": {
     "type": "git",

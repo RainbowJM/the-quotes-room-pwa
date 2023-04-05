@@ -50,4 +50,12 @@ router.get('/offline', function(req, res) {
 	});
 });
 
+// About page
+router.get('/about', function(req, res) {
+	res.render('about', {
+		title: 'About',
+		data: 'The Quotes Room is a single page application, where you get all the quotes that you need'
+	})
+})
+
 module.exports = router;
