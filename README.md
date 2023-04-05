@@ -450,7 +450,27 @@ router.get('/about', function(req, res) {
 ```
 
 ## Progressive Web App
-After having having the main logic of the applicatoion down, it's time to make it a progressive
+After having having the main logic of the applicatoion down, it's time to make it a progressive web application.
+
+This means that the web application has been designed to be capable, reliable and installable. These three pillars transform them into an experience that feels like a platform-specific application.
+
+All of this will give the application some advantage like:
+- Works fast
+- Can use the application offline
+- Can download the application as a app on you phone or desktop
+- You get notifications
+
+### Requirements
+The requirements of a PWA application:
+- HTTPS
+- Service Worker
+- Manifest
+
+#### Service Worker
+
+#### Manifest
+
+#### Testing
 
 ## Source
 - [Compressor](https://github.com/mishoo/UglifyJS)
